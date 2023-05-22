@@ -77,8 +77,7 @@ export default function App() {
         ) : (
           <span text="Contact list is empty."> "Contact list is empty."</span>
         )}
-        
-        </div>
+                </div>
     );
   }
 
