@@ -1,9 +1,9 @@
 import {Phonebook} from "./phonebook/Phonebook";
 import Contacts from "./contacts/Contacts";
 import { Filter } from "./filter/Filter";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import { fetchContacts } from "redux/operations";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 
  
@@ -35,49 +35,105 @@ import { useEffect } from "react";
 
 
 
-export default function App() {
-  const dispatch = useDispatch();
+
+// export default function App() {
+//   const dispatch = useDispatch();
  
-  const contacts = useSelector(state => state.contacts.items);
-  const filtered=useSelector(state => state.filter);
-  const isLoading = useSelector(state => state.contacts.isLoading);
-  const error = useSelector(state => state.contacts.error);
+//   const contacts = useSelector(state => state.contacts.items);
+//   const filtered=useSelector(state => state.filter);
+//   const isLoading = useSelector(state => state.contacts.isLoading);
+//   const error = useSelector(state => state.contacts.error);
   
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+//   useEffect(() => {
+//     dispatch(fetchContacts());
+//   }, [dispatch]);
         
-   const filteredContacts = () => {
+//    const filteredContacts = () => {
     
-     return contacts.filter(contact => 
-         contact.name.toLowerCase().includes(filtered.toLowerCase())
+//      return contacts.filter(contact => 
+//          contact.name.toLowerCase().includes(filtered.toLowerCase())
          
-    );
-  };
+//     );
+//   };
 
 
-    return (
-      <div
-        style={{
-          // height: '100vh',
-          display: 'flex',
-          flexDirection:'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101'
-        }}
-      >
-        <Phonebook  />
-        <Filter  />
-        {contacts.length > 0 ? (
-          <Contacts
-            names={filteredContacts()}
-                      />
-        ) : (
-          <span text="Contact list is empty."> "Contact list is empty."</span>
-        )}
-                </div>
-    );
-  }
+//     return (
+//       <div
+//         style={{
+//           // height: '100vh',
+//           display: 'flex',
+//           flexDirection:'column',
+//           justifyContent: 'center',
+//           alignItems: 'center',
+//           fontSize: 40,
+//           color: '#010101'
+//         }}
+//       >
+//         <Phonebook  />
+//         <Filter  />
+//         {contacts.length > 0 ? (
+//           <Contacts
+//             names={filteredContacts()}
+//                       />
+//         ) : (
+//           <span text="Contact list is empty."> "Contact list is empty."</span>
+//         )}
+//                 </div>
+//     );
+//   }
 
+
+
+  import { useEffect, lazy } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+// import { Layout } from './Layout';
+import { Layout } from "./Layout/Layout";
+// import { PrivateRoute } from './PrivateRoute';
+import { PrivateRoute } from "./routes/PrivatRoute";
+// import { RestrictedRoute } from './RestrictedRoute';
+import { RestrictedRoute } from "./routes/RestrictedRoute";
+import { refreshUser } from 'redux/auth/operations';
+import { useAuth } from 'hooks';
+
+const HomePage = lazy(() => import('../pages/Homepage'));
+const RegisterPage = lazy(() => import('../pages/Register'));
+const LoginPage = lazy(() => import('../pages/Login'));
+// const TasksPage = lazy(() => import('../pages/Tasks'));
+
+export const App = () => {
+  const dispatch = useDispatch();
+  const { isRefreshing } = useAuth();
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute redirectTo="/tasks" component={<RegisterPage />} />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute redirectTo="/tasks" component={<LoginPage />} />
+          }
+        />
+        <Route
+          path="/tasks"
+          element={
+            <PrivateRoute redirectTo="/login" component={<TasksPage />} />
+          }
+        />
+      </Route>
+    </Routes>
+  );
+};
