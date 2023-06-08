@@ -1,84 +1,75 @@
-import {Phonebook} from "./phonebook/Phonebook";
-import Contacts from "./contacts/Contacts";
-import { Filter } from "./filter/Filter";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchContacts } from "redux/operations";
-import { useEffect } from "react";
+// import {Phonebook} from "./phonebook/Phonebook";
+// import Contacts from "./contacts/Contacts";
+// import { Filter } from "./filter/Filter";
+// import { useSelector, useDispatch } from "react-redux";
+// import { fetchContacts } from "redux/operations";
+import { lazy, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./layout/Layout";
+import { PageNotFound } from "pages/Notfound";
 
-
- 
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetchTasks } from "redux/operations";
-// import { getTasks } from "redux/selectors";
-
-// export const App = () => {
-//   const dispatch = useDispatch();
-//   // Отримуємо частини стану
-//   const { items, isLoading, error } = useSelector(getTasks);
-
-//   // Викликаємо операцію
-//   useEffect(() => {
-//     dispatch(fetchContacts());
-//   }, [dispatch]);
-
-//   // Рендерим розмітку в залежності від значень у стані
-//   return (
-//     <div>
-//       {isLoading && <p>Loading tasks...</p>}
-//       {error && <p>{error}</p>}
-//       <p>{items.length > 0 && JSON.stringify(items, null, 2)}</p>
-//     </div>
-//   );
-// };
-
-
-
-
+const Homepage=lazy(()=>import ('../pages/Homepage')); 
+// const Register=lazy(()=>import ('../pages/Register'));
+// const Login=lazy(()=>import ('../pages/Login'));
+// const PhoneContacts=lazy(()=>import ('../pages/PhoneContacts'));
 
 export default function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
  
-  const contacts = useSelector(state => state.contacts.items);
-  const filtered=useSelector(state => state.filter);
-  // const isLoading = useSelector(state => state.contacts.isLoading);
-  // const error = useSelector(state => state.contacts.error);
+  // const contacts = useSelector(state => state.contacts.items);
+  // const filtered=useSelector(state => state.filter);
   
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+  
+  // useEffect(() => {
+  //   dispatch(fetchContacts());
+  // }, [dispatch]);
         
-   const filteredContacts = () => {
+  //  const filteredContacts = () => {
     
-     return contacts.filter(contact => 
-         contact.name.toLowerCase().includes(filtered.toLowerCase())
+  //    return contacts.filter(contact => 
+  //        contact.name.toLowerCase().includes(filtered.toLowerCase())
          
-    );
-  };
+  //   );
+  // };
 
 
     return (
-      <div
-        style={{
-          // height: '100vh',
-          display: 'flex',
-          flexDirection:'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101'
-        }}
-      >
-        <Phonebook  />
-        <Filter  />
-        {contacts.length > 0 ? (
-          <Contacts
-            names={filteredContacts()}
-                      />
-        ) : (
-          <span text="Contact list is empty."> "Contact list is empty."</span>
-        )}
+      <>
+        <Routes>
+          <Route path="/" element={<Layout />} >
+          <Route index element={<Homepage />} />
+        {/* <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="phonecontacts" element={<PhoneContacts />} /> */}
+          <Route path="*" element={<PageNotFound />} /> 
+          </Route>
+      </Routes>
+      </>
+      
+      
+      
+      
+      // <div
+      //   style={{
+      //     display: 'flex',
+      //     flexDirection:'column',
+      //     justifyContent: 'center',
+      //     alignItems: 'center',
+      //     fontSize: 40,
+      //     color: '#010101'
+      //   }}
+      // >
+      //   <Phonebook  />
+      //   <Filter  />
+      //   {contacts.length > 0 ? (
+      //     <Contacts
+      //       names={filteredContacts()}
+      //                 />
+      //   ) : (
+      //     <span text="Contact list is empty."> "Contact list is empty."</span>
+      //   )}
         
-        </div>
+      //   </div>
     );
   }
 

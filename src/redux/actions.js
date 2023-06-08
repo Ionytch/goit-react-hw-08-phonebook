@@ -6,9 +6,7 @@ export const addContact = (name, number) => {
     payload: {
       id: nanoid(),
       name,
-      number,
-      // number:"User number"
-      // completed: false,
+      number,      
     },
   };
 };
@@ -20,10 +18,6 @@ export  const deleteContact = contactId => {
     };
 };
 
-// const toggleCompleted = {
-//   type: "tasks/toggleCompleted",
-//   payload: "Task id",
-// };
 
 export const setFilter = value=>{
   return{
@@ -32,9 +26,3 @@ export const setFilter = value=>{
   }
 };
 
-
-// import { createAction } from "@reduxjs/toolkit";
-// export const addContact = createAction("contacts/addContact");
-// export const deleteContact = createAction("contacts/deleteContact");
-
-// export const setFilter = createAction("filters/setFilter");

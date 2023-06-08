@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchContacts, addContact, deleteContact } from "./operations";
 
-//  const contactsInitialState=[];
 
 const contactsSlice = createSlice({
   name: "contacts",
@@ -10,20 +9,7 @@ const contactsSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  // reducers:{
-//         addContact:{
-//        reducer (state, action) {
-//     state.push(action.payload);
-//         },
-//     prepare(name, number) {
-//         return {
-//           payload: {
-//             name,
-//             number,
-//             id: nanoid(),
-//             },
-//         };
-//       },
+  
   extraReducers: {
     [fetchContacts.pending](state) {
       state.isLoading = true;
