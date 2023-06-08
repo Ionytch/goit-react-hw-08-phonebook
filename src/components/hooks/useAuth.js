@@ -8,7 +8,9 @@ import {
 export const useAuth = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const isRefreshing = useSelector(selectIsRefreshing);
-  const user = useSelector(selectUser);
+    const user = useSelector(selectUser);
+    
+    console.log(user);
 
   return {
     isLoggedIn,
