@@ -9,9 +9,9 @@ import Layout from "./layout/Layout";
 import { PageNotFound } from "pages/Notfound";
 
 const Homepage=lazy(()=>import ('../pages/Homepage')); 
-// const Register=lazy(()=>import ('../pages/Register'));
-// const Login=lazy(()=>import ('../pages/Login'));
-// const PhoneContacts=lazy(()=>import ('../pages/PhoneContacts'));
+const Register=lazy(()=>import ('../pages/Register'));
+const Login=lazy(()=>import ('../pages/Login'));
+const PhoneContacts=lazy(()=>import ('../pages/PhoneContacts'));
 
 export default function App() {
   // const dispatch = useDispatch();
@@ -38,9 +38,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Layout />} >
           <Route index element={<Homepage />} />
-        {/* <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="phonecontacts" element={<PhoneContacts />} /> */}
+        <Route path="phonecontacts" element={<PhoneContacts />} />
           <Route path="*" element={<PageNotFound />} /> 
           </Route>
       </Routes>
