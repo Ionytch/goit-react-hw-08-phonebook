@@ -1,17 +1,32 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { addContact } from "redux/actions";
 // import { addContact } from "redux/contactSlice";
 import { addContact } from "redux/operations";
 
 export const Phonebook=()=> {
     const dispatch = useDispatch();
+    const contacts = useSelector(state => state.contacts.items);
+    console.log(contacts);
 
+    const doesContactExist = newName => {
+    return contacts.some(
+      contact => contact.name.toLowerCase() === newName.toLowerCase()
+    );
+  };
   
     const handleSubmit = e => {
         e.preventDefault();
-        const form = e.target;
+        const form = e.target;       
         console.log(e.target.elements.phone);
         console.log(form.elements.name.value, form.elements.phone.value);
+
+if (doesContactExist(form.elements.name.value))
+        {
+            alert(
+                `user ${form.elements.name.value} is already in the contact list`
+            );
+            return;
+}
 
         dispatch(addContact({ name:form.elements.name.value, phone:form.elements.phone.value }));
 
