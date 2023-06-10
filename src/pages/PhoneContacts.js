@@ -4,13 +4,14 @@ import { Phonebook } from "components/phonebook/Phonebook";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "redux/operations";
+import { selectFilterValue } from "redux/selectors";
 
 const PhoneContacts = () => {
 
     const dispatch = useDispatch();
  
   const contacts = useSelector(state => state.contacts.items);
-  const filtered=useSelector(state => state.filter);
+  const filtered=useSelector(selectFilterValue);
   
   
   useEffect(() => {
@@ -43,7 +44,6 @@ const PhoneContacts = () => {
       >
         <Phonebook  />
             <Filter />
-            {/* <Contacts/> */}
         {contacts.length > 0 ? (
           <Contacts
             names={filteredContacts()}

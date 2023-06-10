@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 // import { setFilter } from "redux/actions";
-// import { setFilter } from "redux/filterSlice";
+import { setContactsFilter } from "redux/filterSlice";
 
 export const Filter = () => {
     const dispatch = useDispatch();
@@ -11,7 +11,8 @@ export const Filter = () => {
         // e.preventDefault();
         // const form = e.target;
         console.log(e.currentTarget.value);
-        dispatch(setFilter(e.currentTarget.value));
+        setFilter(e.currentTarget.value.toLowerCase())
+        dispatch(setContactsFilter(e.currentTarget.value));
 
         // onSubmit({ name, number });
         //   dispatch(addContact(form.elements.name.value));

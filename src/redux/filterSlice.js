@@ -1,17 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const filtersInitialState="";
+const filtersInitialState={ value: '' };
 
 const filtersSlice = createSlice({
   name: "filters",
   initialState: filtersInitialState,
   reducers: {
-    setFilter(state, action) {
-      return state=action.payload;
+    setContactsFilter(state, action) {
+       state.value=action.payload;
     },
   },
 });
 // Експортуємо генератори екшенів та редюсер
-export const { setFilter } = filtersSlice.actions;
+export const { setContactsFilter } = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;
 
