@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { addContact } from "redux/actions";
 // import { addContact } from "redux/contactSlice";
 import { addContact } from "redux/operations";
+import { selectContacts } from "redux/selectors";
 
-export const Phonebook=()=> {
+export const Phonebook = () => {
+    const [name, setName] = useState('');
+    const [number, setNumber] = useState('');
     const dispatch = useDispatch();
-    const contacts = useSelector(state => state.contacts.items);
+    const contacts = useSelector(selectContacts);
     console.log(contacts);
 
     const doesContactExist = newName => {
@@ -17,18 +21,20 @@ export const Phonebook=()=> {
     const handleSubmit = e => {
         e.preventDefault();
         const form = e.target;       
-        console.log(e.target.elements.phone);
-        console.log(form.elements.name.value, form.elements.phone.value);
+        console.log(e.target.elements.number);
+        console.log(name, number);
 
-if (doesContactExist(form.elements.name.value))
+        if (doesContactExist(form.elements.name.value))
         {
             alert(
-                `user ${form.elements.name.value} is already in the contact list`
+                `user ${name} is already in the contact list`
             );
             return;
 }
 
-        dispatch(addContact({ name:form.elements.name.value, phone:form.elements.phone.value }));
+        // dispatch(addContact({ name: form.elements.name.value, number: form.elements.number.value }));
+        dispatch(addContact({ name, number}));
+        
 
         form.reset();
     
@@ -47,20 +53,20 @@ if (doesContactExist(form.elements.name.value))
                     name="name"
                     // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                     title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-                    //  value={name}
-                    // onChange={handleChange}
+                    value={name}
+                    onChange={e => setName(e.target.value)}
                     required
                 ></input>
-                <label for="phone">
+                <label for="number">
                     TEL NUMBER
                 </label>
                 <input
                     type="tel"
-                    name="phone"
+                    name="number"
                     // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                     title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-                    // value={number}
-                    // onChange={handleChange}
+                    value={number}
+                    onChange={e => setNumber(e.target.value)}
                     required
                 ></input>
                 <button type="submit">ADD CONTACT</button>

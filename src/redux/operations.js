@@ -10,8 +10,9 @@ export const fetchContacts = createAsyncThunk(
   // тому що в цій операції він нам не потрібен
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("/contacts");
+      const response = await axios.get('/contacts');
       // При успішному запиті повертаємо проміс із даними
+      console.log(response);
       return response.data;
     } catch (e) {
       // При помилці запиту повертаємо проміс
@@ -23,9 +24,10 @@ export const fetchContacts = createAsyncThunk(
 
 export const addContact = createAsyncThunk(
     "contacts/addContact",
-  async ({ name, phone }, thunkAPI) => {
+  async ({ name, number }, thunkAPI) => {
       try {
-        const response = await axios.post("/contacts", { name, phone });
+        const response = await axios.post('/contacts', { name, number });
+        console.log(response);
         return response.data;
       } catch (e) {
         return thunkAPI.rejectWithValue(e.message);
@@ -51,7 +53,7 @@ export const updateContact = createAsyncThunk(
       try {
         const response = await axios.patch(`/contacts/${updatedContact.id}`, {
         name: updatedContact.name,
-        number: updatedContact.phone,
+        number: updatedContact.number,
       });
         return response.data;
       } catch (e) {

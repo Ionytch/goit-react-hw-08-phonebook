@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "redux/operations";
 
 const PhoneContacts = () => {
+
     const dispatch = useDispatch();
  
   const contacts = useSelector(state => state.contacts.items);
@@ -41,7 +42,8 @@ const PhoneContacts = () => {
         }}
       >
         <Phonebook  />
-        <Filter  />
+            <Filter />
+            {/* <Contacts/> */}
         {contacts.length > 0 ? (
           <Contacts
             names={filteredContacts()}
