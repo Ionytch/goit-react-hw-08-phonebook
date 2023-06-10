@@ -40,7 +40,7 @@ export default function App() {
           <Route index element={<Homepage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="phonecontacts" element={<PhoneContacts />} />
+        <Route path="/phonecontacts" element={<PhoneContacts />} />
           <Route path="*" element={<PageNotFound />} /> 
           </Route>
       </Routes>
