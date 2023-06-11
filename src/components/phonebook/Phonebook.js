@@ -35,8 +35,9 @@ export const Phonebook = () => {
         // dispatch(addContact({ name: form.elements.name.value, number: form.elements.number.value }));
         dispatch(addContact({ name, number}));
         
-
-        form.reset();
+        setName('');
+        setNumber('');
+        // form.reset();
     
     };
 
